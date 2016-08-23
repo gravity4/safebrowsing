@@ -499,8 +499,11 @@ func main() {
 		flag.PrintDefaults()
 	}
 	flag.Parse()
+	if *apiKeyFlag == "" && os.Getenv('API_KEY') != "" {
+		apiKeyFlag = os.Getenv('API_KEY')
+	}
 	if *apiKeyFlag == "" {
-		fmt.Fprintln(os.Stderr, "No -apikey specified")
+		fmt.Fprintln(os.Stderr, "No -apikey specified and API_KEY environment variable is also missing")
 		os.Exit(1)
 	}
 	conf := safebrowsing.Config{
